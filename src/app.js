@@ -4,6 +4,9 @@ require("dotenv").config();
 
 const app = express();
 
+const usersRoute = require("./routes/users");
+const marketsRoute = require("./routes/markets");
+
 // taking port from env file
 const PORT = process.env.PORT;
 
@@ -17,37 +20,8 @@ app.use((req, res, next) => {
   next();
 });
 
-const users = [];
-
-// basic get request
-app.get(
-  "/",
-  // midleware
-  (req, res, next) => {
-    console.log("Before handling request");
-    next();
-  },
-  // midleware
-  (req, res, next) => {
-    res.send(users);
-    next();
-  },
-  // midleware
-  (req, res, next) => {
-    console.log("Finished Executing GET request");
-    next();
-  },
-  // midleware
-  () => {
-    console.log("The end");
-  }
-);
-
-// basic post request
-app.post("/", (req, res) => {
-  users.push(req.body);
-  res.send(201);
-});
+app.use("/users", usersRoute);
+app.use("/markets", marketsRoute);
 
 // listening port
 app.listen(PORT, () => {
