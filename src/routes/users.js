@@ -10,6 +10,9 @@ router.get(
   // midleware
   (req, res, next) => {
     console.log("Before handling request");
+    res.cookie("visited", true, {
+      maxAge: 60000,
+    });
     next();
   },
   // midleware
@@ -29,6 +32,7 @@ router.get(
 );
 
 router.get("/:id", (req, res) => {
+  console.log("cookies", req.cookies);
   const userId = req.params.id;
   const user = users.find((item) => item.id == userId);
   res.send(user);

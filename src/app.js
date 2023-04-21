@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 // used for to make readable env file
 require("dotenv").config();
 
@@ -14,6 +15,8 @@ const PORT = process.env.PORT;
 app.use(express.json());
 // It parses incoming requests with URL-encoded payloads and is based on a body parser.
 app.use(express.urlencoded());
+// parse cookie
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   console.log(`${req.method}:${req.url}`);
