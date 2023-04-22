@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 // used for to make readable env file
 require("dotenv").config();
+require("./database");
 
 const app = express();
 
