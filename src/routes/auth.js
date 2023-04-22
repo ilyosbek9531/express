@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const User = require("../database/schemas/User");
+const { hashPassword } = require("../utils/helpers");
 
 const router = Router();
 
@@ -23,7 +24,8 @@ router.post("/register", async (req, res) => {
   if (userDB) {
     res.status(400).send({ msg: "User already exists!" });
   } else {
-    await User.create({ username, password, email });
+    const hashedPassword = hashPassword(password);
+    await User.create({ username, password: hashedPassword, email });
     res.send(201);
   }
 });
